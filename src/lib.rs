@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 pub fn array_sum(nums: &[i32]) -> i32 {
     nums.iter().sum()
 }
@@ -26,20 +28,16 @@ pub fn find_subarray(nums: &[i32], sum: i32) -> Option<(usize, usize)> {
 
 pub fn find_subarray_smart(nums: &[i32], sum: i32) -> Option<(usize, usize)> {
     let fast = array_sum_lookup(nums);
+    let fast_len: usize = fast.len();
 
     let mut i = 0usize;
     let mut j = 0usize;
-    while j < fast.len() {
-        assert!(i <= j);
+    while j < fast_len {
         let tmp = fast[j] - fast[i];
-        if tmp < sum {
-            j += 1;
-        }
-        else if tmp > sum {
-            i += 1;
-        }
-        else {
-            return Some((i, j - i));
+        match tmp.cmp(&sum) {
+            Ordering::Less => j += 1,
+            Ordering::Greater => i += 1,
+            Ordering::Equal => { return Some((i, j - i)); },
         }
     }
     None
