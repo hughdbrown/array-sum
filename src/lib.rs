@@ -5,7 +5,7 @@ pub fn array_sum(nums: &[i32]) -> i32 {
 }
 
 pub fn array_sum_lookup(nums: &[i32]) -> Vec<i32> {
-    let mut fast: Vec<i32> = vec![];
+    let mut fast: Vec<i32> = Vec::with_capacity(nums.len() + 1);
     let mut prev_sum = 0;
     for num in nums.iter() {
         fast.push(prev_sum);
