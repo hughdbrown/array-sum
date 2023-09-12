@@ -47,15 +47,16 @@ pub fn find_subarray_smart(nums: &[i32], sum: i32) -> Option<(usize, usize)> {
 mod tests {
     use super::*;
 
-    fn it_works() {
+    fn accumulator_generates_all_sums() {
+        // Any sum between `a[i]` and `a[j]` can be summed
+        // from `a` or calculated as `b[j] - b[i]`.
         let a = vec![2, 4, 3, 6, 7, 1, 8, 9, 5];
         let b = array_sum_lookup(&a);
-        assert!(b.len() == a.len() + 1);
+        assert_eq!(b.len(), a.len() + 1);
         for i in 0..a.len() {
-            for j in i+1..a.len() {
-                assert!(j - i >= 1);
+            for j in i..a.len() {
+                assert!(j >= i);
                 let x: &[i32] = &a[i..j];
-                assert!(! x.is_empty());
                 let target: i32 = x.iter().sum();
                 let target2: i32 = b[j] - b[i];
                 assert_eq!(target, target2);
