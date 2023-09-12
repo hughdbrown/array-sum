@@ -10,13 +10,16 @@ fn sanity_check(nums: &[i32], target: i32, result: (usize, usize)) {
 }
 
 fn main() {
-    let mut nums = vec![];
     let mut rng = rand::thread_rng();
     let count: usize = 1000;
-    for _ in 0..count {
-        let num = rng.gen_range(0..10);
-        nums.push(num);
-    }
+    let nums = {
+        let mut nums = vec![];
+        for _ in 0..count {
+            let num = rng.gen_range(0..10);
+            nums.push(num);
+        }
+        nums
+    };
 
     for trial in 0..100 {
         let i: usize = rng.gen_range(0..count/2);
