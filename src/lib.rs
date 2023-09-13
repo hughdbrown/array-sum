@@ -55,11 +55,33 @@ mod tests {
         assert_eq!(b.len(), a.len() + 1);
         for i in 0..a.len() {
             for j in i..a.len() {
-                assert!(j >= i);
                 let x: &[i32] = &a[i..j];
                 let target: i32 = x.iter().sum();
                 let target2: i32 = b[j] - b[i];
                 assert_eq!(target, target2);
+            }
+        }
+    }
+
+    fn algorithms_work() {
+        let mut a = vec![];
+        for i in 1..=32 {
+            a.push(1 << i);
+        }
+        for i in 0..a.len() {
+            for j in i..a.len() {
+                let x: &[i32] = &a[i..j];
+                let target: i32 = x.iter().sum();
+
+                match find_subarray(&a, target) {
+                    Some(range) => assert_eq!(range, (i, j)),
+                    None => unreachable!(),
+                }
+
+                match find_subarray_smart(&a, target) {
+                    Some(range) => assert_eq!(range, (i, j)),
+                    None => unreachable!(),
+                }
             }
         }
     }
